@@ -1,30 +1,61 @@
-# React + TypeScript + Vite
+# Doctor Community
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## 초기설치
+```git
+npm create vite@latest
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 기술스택
+- Vite: 
+- React: `17.0.2`
+- TailwindCSS: `3.0.7`
+- typescript: `4.5.4`
+- Next-auth
+
+## 디렉토리 구조
+- pages
+    - api
+        - auth
+            - [...nextauth]
+    - auth
+        - signin
+        - 404
+    - _app
+    - index
+- components
+
+
+## 구현
+
+- [X] 프론트엔드 기술환경(Nextjs) 세팅 및 전체 기능 구현
+- [X] next-auth 세팅 및 로그인 구현
+- [X] route 별 상세페이지 레이아웃 구현
+- [X] tailwindCSS 레이아웃 및 스타일 추가
+
+
+## 프로젝트 관련 설명
+##### Image
+import Image from "next/image"
+```javascript
+module.exports = {
+  // ...,
+  images: {
+    domains: ["url"]
+  }
+}
+
+```
+
+#### next-auth
+```Git
+yarn add next-auth@beta
+```
+
+#### cypress
+```Git
+yarn add cypress --dev
+
+yarn run cypress open
+```
+
+#### 회고
