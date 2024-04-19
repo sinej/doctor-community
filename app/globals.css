@@ -8,7 +8,7 @@
   }
   /* Button */
   .primary-btn {
-    @apply py-3 text-white w-full rounded-md
+    @apply h-12 py-3 text-white w-full rounded-md
   }
 
 

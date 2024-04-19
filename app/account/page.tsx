@@ -2,6 +2,8 @@ import React from 'react';
 import Link from "next/link";
 import {ChatBubbleIcon} from "@radix-ui/react-icons";
 import {FaGithub} from "react-icons/fa";
+import Input from "@/components/form/input";
+import FormButton from "@/components/form/button";
 
 type Props = {
 
@@ -17,21 +19,31 @@ const Account = (props: Props) => {
                     <p className="s18-regular-lh26 text-gray040">닥터를 시작해볼까요?</p>
                 </div>
                 <form className="flex flex-col gap-3 relative">
-                    <input type="text"
+                    <Input type="text"
                            placeholder="   "
-                           className="block bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2
-                           ring-gray030 focus:ring-blue020 border-none px-3 peer"
                            required
+                           label="이름"
+                           errors={[]}
                     />
-                    <label
-                        className="absolute text-md text-gray050 duration-100 transform -translate-y-3 scale-75 top-3 z-10 origin-[0] left-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9 peer-focus:left-0"
-                    >
-                        이름
-                    </label>
-                    <span className="text-red070 s13-regular-lh16 relative left-1">input error</span>
-
-                    <button className="primary-btn bg-blue030 hover:bg-blue040 transition-color s14-regular-lh20"
-                    >가입하기</button>
+                    <Input type="email"
+                           placeholder="   "
+                           required
+                           label="이메일"
+                           errors={[]}
+                    />
+                    <Input type="password"
+                           placeholder="   "
+                           required
+                           label="비밀번호"
+                           errors={[]}
+                    />
+                    <Input type="password"
+                           placeholder="   "
+                           required
+                           label="비밀번호 확인"
+                           errors={[]}
+                    />
+                    <FormButton loading={true} text="가입하기"/>
                 </form>
 
                 <div className="border border-gray010"/>
