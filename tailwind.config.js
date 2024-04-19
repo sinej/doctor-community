@@ -1,12 +1,127 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
+  mode: "jit", //
+  important: true,
+  darkMode: 'selector',
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
+    './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+
+    // Or if using `src` directory:
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        "50%": "calc((100%))",
+        580: "580px",
+        1000: "1000px",
+        1160: "1160px",
+      },
+      height: {
+        "1px": "1px",
+        "2px": "2px",
+        "10px": "10px",
+        56: "56px",
+        "50%": "calc((50vw - 25px) * 0.753247)",
+      },
+      gridTemplateColumns: {
+        "auto-fit": "repeat(auto-fit, minmax(0, 1fr))",
+        "auto-fill-49": "repeat(auto-fill, minmax(49%, 1fr))",
+        "auto-fill-32": "repeat(auto-fill, minmax(32%, 1fr))",
+        grid4: "repeat(auto-fill, minmax(275px, 1fr))",
+      },
+      gridAutoRows: {
+        10: "10px",
+        "minmax-100": "minmax(100px, auto)",
+        "auto-fill": "repeat(auto-fill, minmax(200px, 1fr))",
+      },
+      gridRowEnd: {
+        8: "8",
+        9: "9",
+        10: "10",
+        11: "11",
+        12: "12",
+        13: "13",
+        14: "14",
+      },
+      fontSize: {
+        sm: "12px",
+        md: "14px",
+        default: "15px",
+        mx: "16px",
+        lg: "18px",
+        xl: "20px",
+        "2xl": "22px",
+        "3xl": "24px",
+        "4xl": "40px",
+      },
+      margin: {
+        30: "30px",
+        40: "40px",
+        60: "60px",
+      },
+      borderRadius: {
+        none: "0",
+        sm: "0.125rem",
+        default: "4px",
+        md: "6px",
+        lg: "8px",
+        full: "9999px",
+        large: "16px",
+      },
+      backgroundSize: {
+        auto: "auto",
+        cover: "cover",
+        contain: "contain",
+      },
+    },
+    fontFamily: {
+      sans: ["Graphik", "sans-serif"],
+      serif: ["Merriweather", "serif"],
+    },
+    colors: {
+      blue000: "#CAE2FC",
+      blue005: "#75ADFF",
+      blue010: "#609BFF",
+      blue020: "#3182f6",
+      blue025: "#246FF8",
+      blue030: "#246FF8",
+      blue040: "#195BFA",
+      blue050: "#0046F0",
+      blue060: "#0F3DDE",
+      blue070: "#0038C1",
+      blue: "#0056FF",
+      gold: "#C19F63",
+      green: "#5CC566",
+      red: "#FF4B3E",
+      red005: "#FFF1F0",
+      red010: "#FFE6E4",
+      red070 : "#FF4B3E",
+      orange: "#FE7849",
+      yellow: "#FFC428",
+      white: "#FFFFFF",
+      gray005: "#FAFBFB",
+      gray010: "#F5F7F8",
+      gray015: "#EFF3F5",
+      gray020: "#E7EAEE",
+      gray025: "#DFE2E7",
+      gray030: "#C9CDD2",
+      gray035: "#AEB3B8",
+      gray040: "#9EA4AA",
+      gray050: "#72787F",
+      gray055: "#535960",
+      gray060: "#454B50",
+      gray065: "#35383C",
+      gray070: "#26282B",
+      gray080: "#1B1D1F",
+      gray085: "#141618",
+      gray090: "#131415",
+      gray095: "#050505",
+      black: "#000",
+      transparent: "transparent",
+    },
   },
-  plugins: [],
-}
-
+  variants: {}, // 지정된 속성에만 사용 가능함! 사용할 속성: ['클래스명']
+};
