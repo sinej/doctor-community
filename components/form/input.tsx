@@ -2,6 +2,7 @@ import React from 'react';
 
 interface InputPropsTypes {
     type: string;
+    name: string;
     label: string;
     placeholder: string;
     required?: boolean;
@@ -9,10 +10,11 @@ interface InputPropsTypes {
 }
 
 const Input = (props: InputPropsTypes) => {
-    const { type, placeholder, required, label, errors } = props;
+    const { type, name,  placeholder, required, label, errors } = props;
     return (
         <div className="relative py-2">
             <input type={type}
+                   name={name}
                    placeholder={placeholder}
                    className="relative pt-3 block bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2
                            ring-gray030 focus:ring-blue020 border-none px-3 peer"
