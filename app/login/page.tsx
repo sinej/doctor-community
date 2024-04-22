@@ -3,7 +3,7 @@
 import Input from "@/components/form/input";
 import FormButton from "@/components/form/button";
 import Link from "next/link";
-import {FaGithub} from "react-icons/fa";
+import {FaGithub, FaPhone} from "react-icons/fa";
 import React from "react";
 import {useFormState} from "react-dom";
 import {login} from "@/app/login/action";
@@ -42,13 +42,22 @@ const Login = () => {
                 </form>
 
                 <div className="border border-gray010"/>
-                <Link href="/SNS"
+                <Link href="/sms"
+                      className="primary-btn bg-gray070 hover:bg-gray080 items-center flex justify-center"
+                >
+                    <span className="mr-3 relative -top-[2px]">
+                        <FaPhone/>
+                    </span>
+                    <span className="s14-medium-lh20">SNS으로 가입하기</span>
+                </Link>
+
+                <Link href="/github"
                       className="primary-btn bg-gray070 hover:bg-gray080 items-center flex justify-center"
                 >
                     <span className="mr-3 relative -top-[2px]">
                         <FaGithub/>
                     </span>
-                    <span className="s14-medium-lh20">SNS으로 가입하기</span>
+                    <span className="s14-medium-lh20">Github으로 가입하기</span>
                 </Link>
             </div>
         </>

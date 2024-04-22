@@ -1,6 +1,5 @@
 "use client"
 
-import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 import {ModeToggle} from "@/components/theme/switch";
 import Link from "next/link";
