@@ -6,11 +6,12 @@ import Link from "next/link";
 import {FaGithub} from "react-icons/fa";
 import React from "react";
 import {useFormState} from "react-dom";
-import {handleForm} from "@/app/login/action";
+import {login} from "@/app/login/action";
+import {PASSWORD_MIN_LENGTH} from "@/lib/constants";
 
 const Login = () => {
 
-    const [state, action] = useFormState(handleForm, null)
+    const [state, action] = useFormState(login, null)
 
     return (
         <>
@@ -27,14 +28,15 @@ const Login = () => {
                            placeholder="   "
                            required
                            label="이메일"
-                           errors={[]}
+                           errors={state?.fieldErrors.email}
                     />
                     <Input type="password"
                            name="password"
                            placeholder="   "
                            required
                            label="비밀번호"
-                           errors={state?.errors ?? []}
+                           errors={state?.fieldErrors.password}
+                           minLength={PASSWORD_MIN_LENGTH}
                     />
                     <FormButton text="로그인" />
                 </form>

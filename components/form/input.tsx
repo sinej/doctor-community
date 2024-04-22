@@ -8,7 +8,7 @@ interface InputPropsTypes {
 
 const Input = (props: InputPropsTypes & InputHTMLAttributes<HTMLInputElement>) => {
     const { label, name, errors = [], ...rest } = props;
-    
+
     return (
         <div className="relative py-2">
             <input name={name}

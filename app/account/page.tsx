@@ -7,6 +7,7 @@ import Input from "@/components/form/input";
 import FormButton from "@/components/form/button";
 import {useFormState} from "react-dom";
 import { account } from "@/app/account/actions";
+import {PASSWORD_MIN_LENGTH} from "@/lib/constants";
 
 const Account = () => {
 
@@ -41,7 +42,7 @@ const Account = () => {
                            placeholder="   "
                            required
                            label="비밀번호"
-                           minLength={4}
+                           minLength={PASSWORD_MIN_LENGTH}
                            errors={state?.fieldErrors.password}
                     />
                     <Input type="password"
@@ -49,7 +50,7 @@ const Account = () => {
                            placeholder="   "
                            required
                            label="비밀번호 확인"
-                           minLength={4}
+                           minLength={PASSWORD_MIN_LENGTH}
                            errors={state?.fieldErrors.passwordConfirm}
                     />
                     <FormButton text="가입하기" />
