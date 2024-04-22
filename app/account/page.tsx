@@ -5,13 +5,12 @@ import Link from "next/link";
 import {FaGithub} from "react-icons/fa";
 import Input from "@/components/form/input";
 import FormButton from "@/components/form/button";
-import { redirect } from "next/navigation";
 import {useFormState} from "react-dom";
-import {handleForm} from "@/app/login/action";
+import { account } from "@/app/account/actions";
 
 const Account = () => {
 
-    const [state, action] = useFormState(handleForm, null)
+    const [state, action] = useFormState(account, null)
 
     return (
         <>
@@ -26,28 +25,32 @@ const Account = () => {
                            placeholder="   "
                            required
                            label="이름"
-                           errors={[]}
+                           minLength={2}
+                           maxLength={10}
+                           errors={state?.fieldErrors.username}
                     />
                     <Input type="email"
                            name="email"
                            placeholder="   "
                            required
                            label="이메일"
-                           errors={[]}
+                           errors={state?.fieldErrors.email}
                     />
                     <Input type="password"
                            name="password"
                            placeholder="   "
                            required
                            label="비밀번호"
-                           errors={state?.errors ?? []}
+                           minLength={4}
+                           errors={state?.fieldErrors.password}
                     />
                     <Input type="password"
                            name="password-confirm"
                            placeholder="   "
                            required
                            label="비밀번호 확인"
-                           errors={[]}
+                           minLength={4}
+                           errors={state?.fieldErrors.passwordConfirm}
                     />
                     <FormButton text="가입하기" />
                 </form>

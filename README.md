@@ -11,6 +11,7 @@ npm create vite@latest
 - TailwindCSS: `3.0.7`
 - typescript: `4.5.4`
 - Next-auth
+- zod - 유효성 검사
 
 ## 디렉토리 구조
 - pages
