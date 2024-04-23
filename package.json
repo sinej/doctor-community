@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "next",
     "start": "next start",
-    "next build": "next build",
-    "test": "vitest"
+    "next build": "prisma generate && next build",
+    "test": "vitest",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
