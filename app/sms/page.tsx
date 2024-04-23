@@ -8,6 +8,7 @@ import {smsVerification} from "@/app/sms/action";
 
 const initialState = {
     code: false,
+    error: undefined,
 }
 
 const SMSLogin = () => {
@@ -23,23 +24,25 @@ const SMSLogin = () => {
                 <form className="flex flex-col gap-3 relative"
                       action={action}
                 >
-                    <Input type="number"
-                           name="phoneNumber"
-                           placeholder="   "
-                           required
-                           label="핸드폰 번호"
-                           // errors={state?.fieldErrors.phoneNumber}
-                    />
-                    {state.code ? <Input type="number"
-                                         name="verificationCode"
-                                         placeholder="   "
-                                         required
-                                         label="인증번호"
-                        // errors={state?.fieldErrors.verificationCode}
-                                         min={100000}
-                                         max={999999}
-                    />: null}
-                    <FormButton text="인증"/>
+                    {state.code ? (
+                        <Input type="number"
+                               name="verificationCode"
+                               placeholder="   "
+                               required
+                               label="인증번호"
+                               min={100000}
+                               max={999999}
+                        />
+                    ) : (
+                        <Input type="text"
+                               name="phoneNumber"
+                               placeholder="   "
+                               required
+                               label="핸드폰 번호"
+                               errors={state.error?.formErrors}
+                        />
+                    )}
+                    <FormButton text={state.code ? '전송하기' : "인증 문자 보내기"}/>
                 </form>
             </div>
         </>

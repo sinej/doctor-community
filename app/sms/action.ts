@@ -4,7 +4,12 @@ import {z} from "zod";
 import validate from "validator";
 import {redirect} from "next/navigation";
 
-const phoneSchema = z.string().trim().refine(phone => validate.isMobilePhone(phone, "ko-KR"))
+const phoneSchema = z.string()
+    .trim()
+    .refine(
+        phone =>
+            validate.isMobilePhone(phone, "ko-KR"), "잘못된 번호 형식입니다."
+    )
 
 const verificationCodeSchema = z.coerce.number().min(100000).max(999999);
 
