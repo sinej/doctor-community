@@ -3,7 +3,7 @@
 import {z} from "zod";
 import {PASSWORD_MIN_LENGTH, PASSWORD_REGEX, PASSWORD_REGEX_ERROR} from "@/lib/constants";
 
-const FORM_SCHEMA = z.object({
+const formSchema = z.object({
     email: z.string().email().toLowerCase(),
     password: z.string({
         required_error: "비밀번호를 입력하세요."
@@ -16,7 +16,7 @@ export async function login(prevState: any, formData: FormData) {
         password: formData.get("password"),
     }
 
-    const result =  FORM_SCHEMA.safeParse(data); // username 유효성검사
+    const result =  formSchema.safeParse(data); // username 유효성검사
 
     if(!result.success) {
         return result.error.flatten()

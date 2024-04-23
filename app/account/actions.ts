@@ -9,7 +9,7 @@ const checkUsername = (username: string) =>
 const checkPasswords = ({ password, passwordConfirm }: { password: string, passwordConfirm: string }) =>
     password === passwordConfirm;
 
-const FORM_SCHEMA = z.object({
+const formSchema = z.object({
     username: z.string({
         invalid_type_error: "이름은 글자이어야 합니다.",
         required_error: '이름이 정확하지 않습니다.'
@@ -37,7 +37,7 @@ export async function account(prevState: any, formData: FormData) {
         passwordConfirm: formData.get("password-confirm")
     }
 
-     const result =  FORM_SCHEMA.safeParse(data); // username 유효성검사
+     const result =  formSchema.safeParse(data); // username 유효성검사
 
     if(!result.success) {
         return result.error.flatten()

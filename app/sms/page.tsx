@@ -6,8 +6,12 @@ import React from "react";
 import {useFormState} from "react-dom";
 import {smsVerification} from "@/app/sms/action";
 
+const initialState = {
+    code: false,
+}
+
 const SMSLogin = () => {
-    const [state, action] = useFormState(smsVerification, null)
+    const [state, action] = useFormState(smsVerification, initialState)
 
     return (
         <>
@@ -24,15 +28,17 @@ const SMSLogin = () => {
                            placeholder="   "
                            required
                            label="핸드폰 번호"
-                           errors={state?.fieldErrors.phoneNumber}
+                           // errors={state?.fieldErrors.phoneNumber}
                     />
-                    <Input type="number"
-                           name="verificationCode"
-                           placeholder="   "
-                           required
-                           label="인증번호"
-                           errors={state?.fieldErrors.verificationCode}
-                    />
+                    {state.code ? <Input type="number"
+                                         name="verificationCode"
+                                         placeholder="   "
+                                         required
+                                         label="인증번호"
+                        // errors={state?.fieldErrors.verificationCode}
+                                         min={100000}
+                                         max={999999}
+                    />: null}
                     <FormButton text="인증"/>
                 </form>
             </div>

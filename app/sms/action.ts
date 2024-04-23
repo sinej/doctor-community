@@ -1,23 +1,42 @@
 'use server';
 
 import {z} from "zod";
+import validate from "validator";
+import {redirect} from "next/navigation";
 
-const FORM_SCHEMA = z.object({
-    phoneNumber: z.string(),
-    verificationCode: z.string(),
-})
+const phoneSchema = z.string().trim().refine(phone => validate.isMobilePhone(phone, "ko-KR"))
 
-export async function smsVerification(prevState: any, formData: FormData) {
-    const data = {
-        phoneNumber: formData.get("phoneNumber"),
-        verificationCode: formData.get("verificationCode"),
-    }
+const verificationCodeSchema = z.coerce.number().min(100000).max(999999);
 
-    const result =  FORM_SCHEMA.safeParse(data); // username 유효성검사
+interface ActionState {
+    code: boolean;
+}
 
-    if(!result.success) {
-        return result.error.flatten()
+export async function smsVerification(prevState: ActionState, formData: FormData) {
+    const phone = formData.get('phoneNumber')
+    const code = formData.get('verificationCode')
+
+    if(!prevState.code) {
+        const result = phoneSchema.safeParse(phone);
+        if(!result.success) {
+            return {
+                code: false,
+                error: result.error.flatten(),
+            }
+        } else {
+            return {
+                code: true,
+            }
+        }
     } else {
-        console.log("result.data", result.data)
+        const result = verificationCodeSchema.safeParse(code)
+        if(!result.success) {
+            return {
+                code: true,
+                error: result.error.flatten(),
+            }
+        } else {
+            redirect('/')
+        }
     }
 }
