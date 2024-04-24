@@ -7,7 +7,7 @@ import {useFormState} from "react-dom";
 import {smsVerification} from "@/app/sms/action";
 
 const initialState = {
-    code: false,
+    token: false,
     error: undefined,
 }
 
@@ -24,9 +24,9 @@ const SMSLogin = () => {
                 <form className="flex flex-col gap-3 relative"
                       action={action}
                 >
-                    {state.code ? (
+                    {state.token ? (
                         <Input type="number"
-                               name="verificationCode"
+                               name="token"
                                placeholder="   "
                                required
                                label="인증번호"
@@ -42,7 +42,7 @@ const SMSLogin = () => {
                                errors={state.error?.formErrors}
                         />
                     )}
-                    <FormButton text={state.code ? '전송하기' : "인증 문자 보내기"}/>
+                    <FormButton text={state.token ? '전송하기' : "인증 문자 보내기"}/>
                 </form>
             </div>
         </>

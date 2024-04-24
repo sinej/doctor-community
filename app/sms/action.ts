@@ -28,14 +28,14 @@ async function tokenExists(token: number) {
     return Boolean(exists);
 }
 
-const verificationCodeSchema = z.coerce
+const verificationTokenSchema = z.coerce
     .number()
     .min(100000)
     .max(999999)
     .refine(tokenExists, "token이 존재하지 않습니다.")
 
 interface ActionState {
-    code: boolean;
+    token: boolean;
 }
 
 async function getToken() {
@@ -58,13 +58,13 @@ async function getToken() {
 
 export async function smsVerification(prevState: ActionState, formData: FormData) {
     const phone = formData.get('phoneNumber')
-    const code = formData.get('verificationCode')
+    const token = formData.get('token')
 
-    if(!prevState.code) {
+    if(!prevState.token) {
         const result = phoneSchema.safeParse(phone);
         if(!result.success) {
             return {
-                code: false,
+                token: false,
                 error: result.error.flatten(),
             }
         } else {
@@ -93,7 +93,7 @@ export async function smsVerification(prevState: ActionState, formData: FormData
                     }
                 }
             })
-            // 이전 token code 삭제하기
+            // 이전 token 삭제하기
             // 새 token 생성
             // token -> SMS을 통해 사용자에게 보내기
             const client = twilio(
@@ -107,14 +107,14 @@ export async function smsVerification(prevState: ActionState, formData: FormData
             })
 
             return {
-                code: true,
+                token: true,
             }
         }
     } else {
-        const result = await verificationCodeSchema.spa(code)
+        const result = await verificationTokenSchema.spa(token)
         if(!result.success) {
             return {
-                code: true,
+                token: true,
                 error: result.error.flatten(),
             }
         } else {

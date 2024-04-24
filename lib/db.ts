@@ -12,6 +12,5 @@ async function test() {
         }
     })
 }
-test()
 
 export default db;
