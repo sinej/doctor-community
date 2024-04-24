@@ -59,8 +59,9 @@ export async function login(prevState: any, formData: FormData) {
         if(success) {
             const session = await getSession()
             session.id = user!.id;
+            await session.save();
             // /profile 라우터 이동 처리
-            redirect('/profile')
+            redirect('/profile');
         } else {
             return {
                 fieldErrors: {

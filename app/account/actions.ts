@@ -47,7 +47,6 @@ const formSchema = z.object({
     })
         .toLowerCase()
         .trim()
-        // .transform(username => `💯${username}💯`)
         .refine(checkUsername, "doctor를 사용할 수 없습니다.")
         .refine(checkUniqueUsername, "이 사용자 이름은 이미 사용 중입니다."),
     email: z.string().email()
