@@ -16,7 +16,7 @@ const SMSLogin = () => {
 
     return (
         <>
-            <div className="flex flex-col gap-10 py-8 px-6">
+            <div className="flex flex-col gap-10 py-8">
                 <div className="flex flex-col gap-1">
                     <h2 className="s24-bold-lh32 text-gray080">SMS 로그인</h2>
                     <p className="s18-regular-lh26 text-gray040">핸드폰 번호로 인증해주세요</p>
