@@ -97,13 +97,13 @@ export async function smsVerification(prevState: ActionState, formData: FormData
             // 새 token 생성
             // token -> SMS을 통해 사용자에게 보내기
             const client = twilio(
-                process.env.TWILIO_ACCOUNT_SID,
-                process.env.TWILIO_AUTH_TOKEN
+                process.env.NEXT_PUBLIC_TWILIO_ACCOUNT_SID,
+                process.env.NEXT_PUBLIC_TWILIO_AUTH_TOKEN
             );
             await client.messages.create({
                 body: `당신의 인증코드는 ${token} 입니다.`,
-                from: process.env.TWILIO_PHONE_NUMBER!,
-                to: process.env.MY_PHONE_NUMBER!
+                from: process.env.NEXT_PUBLIC_TWILIO_PHONE_NUMBER!,
+                to: process.env.NEXT_PUBLIC_MY_PHONE_NUMBER!
             })
 
             return {

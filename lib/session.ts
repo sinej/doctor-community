@@ -8,6 +8,6 @@ interface SessionTypes {
 export default function getSession() {
     return getIronSession<SessionTypes>(cookies(), {
         cookieName: "doctor-name",
-        password: process.env.COOKIE_PASSWORD!
+        password: process.env.NEXT_PUBLIC_COOKIE_PASSWORD!
     })
 }
