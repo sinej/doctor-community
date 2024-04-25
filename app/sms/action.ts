@@ -102,8 +102,8 @@ export async function smsVerification(prevState: ActionState, formData: FormData
             );
             await client.messages.create({
                 body: `당신의 인증코드는 ${token} 입니다.`,
-                from: process.env.NEXT_PUBLIC_TWILIO_PHONE_NUMBER!,
-                to: process.env.NEXT_PUBLIC_MY_PHONE_NUMBER!
+                from: process.env.TWILIO_PHONE_NUMBER!,
+                to: process.env.MY_PHONE_NUMBER!
             })
 
             return {
