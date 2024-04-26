@@ -2,7 +2,7 @@ import getSession from "@/lib/session";
 import db from "@/lib/db";
 import {notFound, redirect} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import {AiFillNotification, AiFillSetting, AiOutlineNotification, AiOutlineSetting} from "react-icons/ai";
+import {AiOutlineNotification, AiOutlineSetting} from "react-icons/ai";
 
 async function getUser() {
     const session = await getSession();

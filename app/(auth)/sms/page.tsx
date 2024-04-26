@@ -4,7 +4,7 @@ import Input from "@/components/form/input";
 import FormButton from "@/components/form/button";
 import React from "react";
 import {useFormState} from "react-dom";
-import {smsVerification} from "@/app/sms/action";
+import {smsVerification} from "@/app/(auth)/sms/action";
 
 const initialState = {
     token: false,

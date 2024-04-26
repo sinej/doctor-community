@@ -6,7 +6,7 @@ import {FaGithub} from "react-icons/fa";
 import Input from "@/components/form/input";
 import FormButton from "@/components/form/button";
 import {useFormState} from "react-dom";
-import { account } from "@/app/account/actions";
+import { account } from "@/app/(auth)/account/actions";
 import {PASSWORD_MIN_LENGTH} from "@/lib/constants";
 
 const Account = () => {

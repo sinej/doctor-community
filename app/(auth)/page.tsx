@@ -6,7 +6,7 @@ import Link from "next/link";
 import "@/lib/db";
 
 
-const Home = () => {
+const Main = () => {
     const { push } = useRouter();
 
     return (
@@ -37,4 +37,4 @@ const Home = () => {
 }
 
 
-export default Home;
+export default Main;

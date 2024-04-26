@@ -6,7 +6,7 @@ import Link from "next/link";
 import {FaGithub, FaPhone} from "react-icons/fa";
 import React from "react";
 import {useFormState} from "react-dom";
-import {login} from "@/app/login/action";
+import {login} from "@/app/(auth)/login/action";
 import {PASSWORD_MIN_LENGTH} from "@/lib/constants";
 
 const Login = () => {
