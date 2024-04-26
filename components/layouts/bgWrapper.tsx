@@ -8,7 +8,7 @@ const BgWrapper = (props: Props) => {
     const { children } = props;
     return (
         <>
-            <div className="max-w-screen-md w-full mx-auto px-6">
+            <div className="max-w-screen-md w-full mx-auto">
                 {children}
             </div>
         </>

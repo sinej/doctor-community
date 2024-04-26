@@ -4,8 +4,8 @@ import "./globals.css";
 import BgWrapper from "@/components/layouts/bgWrapper";
 
 export const metadata: Metadata = {
-    title: "Doctor Community",
-    description: "Doctor Community",
+    title: {template: "%s | Doctor Community", default: "Doctor Community"},
+    description: "국내 유일, 실시간 병원 접수/예약 서비스.",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
