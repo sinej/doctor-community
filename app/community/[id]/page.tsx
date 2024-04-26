@@ -1,23 +1,21 @@
 import db from "@/lib/db";
-import {notFound} from "next/navigation";
-import getSession from "@/lib/session";
 import Image from "next/image";
-import Link from "next/link";
-import {BiUser} from "react-icons/bi";
-import Input from "@/components/form/input";
-import {FiDelete} from "react-icons/fi";
+import { notFound, redirect } from "next/navigation";
+import {
+    unstable_cache as nextCache,
+    revalidateTag,
+} from "next/cache";
 
 async function getIsOwner(userId: number) {
-    const session = await getSession()
-
-    if(session.id) {
-        return session.id === userId;
-    }
+    // const session = await getSession();
+    // if (session.id) {
+    //   return session.id === userId;
+    // }
     return false;
 }
 
-async function getPosts(id: number) {
-    const community = await db.community.findUnique({
+async function getProduct(id: number) {
+    const product = await db.community.findUnique({
         where: {
             id,
         },
@@ -26,78 +24,134 @@ async function getPosts(id: number) {
                 select: {
                     username: true,
                     avatar: true,
-                }
-            }
-        }
+                },
+            },
+        },
     });
-    return community
+    return product;
 }
 
-interface CommunityDetailType {
-    params: {
-        id: string;
-    }
-};
+const getCachedProduct = nextCache(getProduct, ["product-detail"], {
+    tags: ["product-detail"],
+});
 
-const CommunityDetail = async (props: CommunityDetailType) => {
-    const { params: { id }} = props;
+async function getProductTitle(id: number) {
+    const product = await db.community.findUnique({
+        where: {
+            id,
+        },
+        select: {
+            title: true,
+        },
+    });
+    return product;
+}
 
-    const detailId = Number(id);
+const getCachedProductTitle = nextCache(getProductTitle, ["product-title"], {
+    tags: ["product-title"],
+});
 
-    if(isNaN(detailId)) {
+export async function generateMetadata({ params }: { params: { id: string } }) {
+    const product = await getCachedProductTitle(Number(params.id));
+    return {
+        title: product?.title,
+    };
+}
+
+export default async function ProductDetail({
+                                                params,
+                                            }: {
+    params: { id: string };
+}) {
+    const id = Number(params.id);
+    if (isNaN(id)) {
         return notFound();
     }
-
-    const posts = await getPosts(detailId);
-    console.log("posts", posts)
-
-    if(!posts) {
+    const product = await getCachedProduct(id);
+    if (!product) {
         return notFound();
     }
+    const isOwner = await getIsOwner(product.userId);
+    const revalidate = async () => {
+        "use server";
+        revalidateTag("xxxx");
+    };
+    // const createChatRoom = async () => {
+    //     "use server";
+    //     const session = await getSession();
+    //     const room = await db.chatRoom.create({
+    //         data: {
+    //             users: {
+    //                 connect: [
+    //                     {
+    //                         id: product.userId,
+    //                     },
+    //                     {
+    //                         id: session.id,
+    //                     },
+    //                 ],
+    //             },
+    //         },
+    //         select: {
+    //             id: true,
+    //         },
+    //     });
+    //     redirect(`/chats/${room.id}`);
+    // };
 
-    const isOwner = await getIsOwner(posts.userId);
-
+    console.log("product", product)
     return (
-        <div>
-            <div className=" fixed top-2 right-6">
-                <FiDelete size={16}/>
-                <span className="text-red s14-medium-lh20">삭제</span>
+        <div className="pb-40">
+            <div className="relative aspect-square">
+                <Image
+                    className="object-cover"
+                    fill
+                    src={`${product.photo}/width=500,height=500`}
+                    alt={product.title}
+                />
             </div>
-            <div className="p-5">
-                <div className="flex items-center gap-3 border-b border-gray030">
-                    <div className="size-10 rounded-full">
-                        {posts.user.avatar !== null ? (
-                           <Image src={posts.user.avatar}
-                                  width={40}
-                                  height={40}
-                                  alt={posts.user.username}
-                           />
-                        ) : (
-                            <BiUser className=""/>
-                        )}
-                    </div>
-                    <div className="p-5 flex items-center gap-3 border-b border-gray030">
-                        <h3>{posts.user.username}</h3>
-                    </div>
+            <div className="p-5 flex items-center gap-3 border-b border-neutral-700">
+                <div className="size-10 overflow-hidden rounded-full">
+                    {product.user.avatar !== null ? (
+                        <Image
+                            src={product.user.avatar}
+                            width={40}
+                            height={40}
+                            alt={product.user.username}
+                        />
+                    ) : null}
                 </div>
                 <div>
-                    <h1 className="s18-bold-lh26">{posts.title}</h1>
-                    <p className="s15-regular-lh24">{posts.description}</p>
-                </div>
-                <div className="relative aspect-square rounded-md overflow-hidden">
-                    <Image src={posts.photo} alt={posts.title} fill />
+                    <h3>{product.user.username}</h3>
                 </div>
             </div>
-            <div className="fixed w-full bottom-0 left-0 p-5 pb-10 flex justify-between items-center">
-                <Input type="email"
-                       name="email"
-                       placeholder="   "
-                       required
-                />
-                <Link href={``}>채팅하기</Link>
+            <div className="p-5">
+                <h1 className="text-2xl font-semibold">{product.title}</h1>
+                <p>{product.description}</p>
+            </div>
+            <div className="fixed w-full bottom-0  p-5 pb-10 bg-neutral-800 flex justify-between items-center max-w-screen-sm">
+                {isOwner ? (
+                    <form action={revalidate}>
+                        <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
+                            Revalidate title cache
+                        </button>
+                    </form>
+                ) : null}
+                <form>
+                    <button className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold">
+                        채팅하기
+                    </button>
+                </form>
             </div>
         </div>
     );
 }
 
-export default CommunityDetail;
+export async function generateStaticParams() {
+    const products = await db.community.findMany({
+        select: {
+            id: true,
+        },
+    });
+    return products.map((product) => ({ id: product.id + "" }));
+}

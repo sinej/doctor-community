@@ -1,37 +1,64 @@
-'use client'
+"use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import {formatToTimeAgo} from "@/lib/utils";
+import { InitialProducts } from "@/app/(tabs)/home/page";
+import ListProduct from "./post";
+import { useEffect, useRef, useState } from "react";
+import { getMoreProducts } from "@/app/(tabs)/home/actions";
 
-interface PostsListType {
-    id: number;
-    title: string;
-    description: string;
-    created_at: Date;
-    photo: string;
+interface ProductListProps {
+    initialProducts: InitialProducts;
 }
 
-const PostsList = (props: PostsListType) => {
-    const { id, title, description, created_at, photo } = props;
+export default function ProductList({ initialProducts }: ProductListProps) {
+    const [products, setProducts] = useState(initialProducts);
+    const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState(0);
+    const [isLastPage, setIsLastPage] = useState(false);
+    const trigger = useRef<HTMLSpanElement>(null);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            async (
+                entries: IntersectionObserverEntry[],
+                observer: IntersectionObserver
+            ) => {
+                const element = entries[0];
+                if (element.isIntersecting && trigger.current) {
+                    observer.unobserve(trigger.current);
+                    setIsLoading(true);
+                    const newProducts = await getMoreProducts(page + 1);
+                    if (newProducts.length !== 0) {
+                        setProducts((prev) => [...prev, ...newProducts]);
+                        setPage((prev) => prev + 1);
+                    } else {
+                        setIsLastPage(true);
+                    }
+                    setIsLoading(false);
+                }
+            },
+            {
+                threshold: 1.0,
+            }
+        );
+        if (trigger.current) {
+            observer.observe(trigger.current);
+        }
+        return () => {
+            observer.disconnect();
+        };
+    }, [page]);
     return (
-        <>
-            <Link href={`/post/${id}`} className="flex gap-5">
-                <div className="flex flex-col gap-1">
-                    <span className="s14-medium-lh20">{title}</span>
-                    <span>{description}</span>
-                    <span className="s11-regular-lh15 text-gray060">{formatToTimeAgo(created_at.toString())}</span>
-                </div>
-                <div className="relative size-28 rounded-md overflow-hidden">
-                    <Image src={photo}
-                           alt={title}
-                           fill
-                           quality={10}
-                    />
-                </div>
-            </Link>
-        </>
+        <div className="p-5 flex flex-col gap-5">
+            {products.map((post) => (
+                <ListProduct key={post.id} {...post} />
+            ))}
+            {/* {!isLastPage ? (
+        <span
+          ref={trigger}
+          className="text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
+        >
+          {isLoading ? "로딩 중" : "Load more"}
+        </span>
+      ) : null} */}
+        </div>
     );
 }
-
-export default PostsList;

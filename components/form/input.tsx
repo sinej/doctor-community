@@ -1,4 +1,4 @@
-import React, {InputHTMLAttributes} from 'react';
+import React, {ForwardedRef, InputHTMLAttributes, forwardRef} from 'react';
 
 interface InputPropsTypes {
     name: string;
@@ -6,12 +6,13 @@ interface InputPropsTypes {
     errors?: string[];
 }
 
-const Input = (props: InputPropsTypes & InputHTMLAttributes<HTMLInputElement>) => {
+const _Input = (props: InputPropsTypes & InputHTMLAttributes<HTMLInputElement>, ref: ForwardedRef<HTMLInputElement>) => {
     const { label, name, errors = [], ...rest } = props;
 
     return (
         <div className="relative py-2">
             <input name={name}
+                   ref={ref}
                    className="relative pt-3 block bg-transparent rounded-md w-full h-10 focus:outline-none ring-1 focus:ring-2
                            ring-gray030 focus:ring-blue020 border-none px-3 peer"
                    {...rest}
@@ -28,4 +29,4 @@ const Input = (props: InputPropsTypes & InputHTMLAttributes<HTMLInputElement>) =
     );
 }
 
-export default Input;
+export default forwardRef(_Input);
