@@ -99,7 +99,6 @@ export default async function ProductDetail({
     //     redirect(`/chats/${room.id}`);
     // };
 
-    console.log("product", product)
     return (
         <div className="pb-40">
             <div className="relative aspect-square">
