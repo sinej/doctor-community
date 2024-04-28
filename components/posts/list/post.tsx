@@ -4,7 +4,6 @@ import Link from "next/link";
 
 interface ListProductProps {
     title: string;
-    price: number;
     created_at: Date;
     photo: string;
     id: number;
@@ -12,7 +11,6 @@ interface ListProductProps {
 
 export default function ListProduct({
                                         title,
-                                        price,
                                         created_at,
                                         photo,
                                         id,
